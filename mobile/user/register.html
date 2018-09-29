@@ -28,14 +28,14 @@
                         <input name="username" type="text" placeholder="用户名">
                     </div>
                     <div class="mui-input-row">
-                        <input name="mobile" type="text" placeholder="手机号">
+                        <input class="mobile" name="mobile" type="text" placeholder="手机号">
                     </div>
                     <div class="mui-input-row">
                         <input name="password" type="password" placeholder="密码" class="mui-input-password">
                         <span class="mui-icon mui-icon-eye"></span>
                     </div>
                     <div class="mui-input-row">
-                        <input name="password" type="password" placeholder="确认密码" class="mui-input-password">
+                        <input type="password" placeholder="确认密码" class="mui-input-password">
                         <span class="mui-icon mui-icon-eye"></span>
                     </div>
                     <div class="mui-input-row">
@@ -68,13 +68,25 @@
     <script src="../res/mui/js/mui.min.js"></script>
     <script src="../js/jquery.min.js"></script>
     <script>
+        //验证码
+        $('.btn_getCode').on('click', function(){
+                //发送请求
+                $.ajax({
+                    url: '/api/user/vCode',
+                    type: 'get',
+                    data: {
+                        mobile: $('.mobile').val()      
+                    },
+                    success:function(info){
+                            console.log(info);
+                    }
+                })
+        })
 
-        console.log(213);
-        
         $('form').on('submit', function () {
             //1.获取用户表单输入信息
             var data = $(this).serialize();
-            //2.将用户信息发送到服务端
+            //2.将用户信息发送到服务端  
             $.ajax({
                 url: '/api/user/register',
                 type: 'post',
@@ -86,6 +98,7 @@
                     }
                 }
             });
+          
             //阻止表单默认提交
             return false;
         })
